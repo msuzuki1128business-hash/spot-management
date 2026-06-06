@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>ログイン - 空港スポット管理システム</title>
+</head>
+<body>
+    <h1>空港スポット管理システム</h1>
+    <h2>ログイン</h2>
+
+    <div th:if="${param.error}">
+        <p style="color:red;">ユーザーIDまたはパスワードが正しくありません</p>
+    </div>
+
+    <form th:action="@{/login}" method="post">
+        <div>
+            <label>ユーザーID：</label>
+            <input type="text" name="username" required>
+        </div>
+        <div>
+            <label>パスワード：</label>
+            <input type="password" name="password" required>
+        </div>
+        <div>
+            <button type="submit">ログイン</button>
+        </div>
+    </form>
+</body>
+</html>
