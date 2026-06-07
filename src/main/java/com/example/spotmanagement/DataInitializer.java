@@ -1,18 +1,21 @@
 package com.example.spotmanagement;
 
-import com.example.spotmanagement.entity.AircraftType;
-import com.example.spotmanagement.entity.Spot;
-import com.example.spotmanagement.entity.User;
-import com.example.spotmanagement.repository.AircraftTypeRepository;
-import com.example.spotmanagement.repository.SpotRepository;
-import com.example.spotmanagement.repository.UserRepository;
-import lombok.RequiredArgsConstructor;
+import java.time.LocalDateTime;
+
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
-import java.time.LocalDateTime;
+
+import com.example.spotmanagement.entity.AircraftType;
 import com.example.spotmanagement.entity.Flight;
+import com.example.spotmanagement.entity.Spot;
+import com.example.spotmanagement.entity.User;
+import com.example.spotmanagement.repository.AircraftTypeRepository;
 import com.example.spotmanagement.repository.FlightRepository;
+import com.example.spotmanagement.repository.SpotRepository;
+import com.example.spotmanagement.repository.UserRepository;
+
+import lombok.RequiredArgsConstructor;
 
 @Component
 @RequiredArgsConstructor
@@ -58,12 +61,12 @@ public class DataInitializer implements CommandLineRunner {
         // 型式の初期データ
         if (aircraftTypeRepository.count() == 0) {
             String[][] typeData = {
-                {"B777", "W64"},
-                {"B787", "W60"},
-                {"B767", "W48"},
-                {"B737", "W36"},
-                {"A320", "W36"},
-                {"A321", "W36"}
+                {"B777", "W32"},
+                {"B787", "W30"},
+                {"B767", "W24"},
+                {"B737", "W18"},
+                {"A320", "W18"},
+                {"A321", "W18"}
             };
             for (String[] data : typeData) {
                 AircraftType type = new AircraftType();

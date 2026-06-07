@@ -34,9 +34,12 @@
 
     <main>
         <h2>便登録</h2>
-        <p class="utc-note">※ 時刻はすべてUTCで入力してください（形式：YYYYMMDDHHmm）</p>
+		
+		<p class="utc-note">※ 時刻はすべてUTCで入力してください（形式：YYYYMMDDHHmm）</p>
 
-        <form th:action="@{/spots/flights}" th:object="${flightForm}" method="post">
+		<div th:if="${errorMessage}" style="color:#e74c3c; background:#fadbd8; padding:10px 16px; border-radius:4px; margin-bottom:16px; font-size:13px;" th:text="${errorMessage}"></div>
+
+		<form th:action="@{/spots/flights}" th:object="${flightForm}" method="post">
 
             <div class="flight-columns">
                 <!-- 到着便 -->
