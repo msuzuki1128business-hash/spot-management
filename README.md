@@ -2,7 +2,7 @@
 
 ## 概要
 航空機が駐機するスポットの使用状況を管理するWebアプリケーションです。
-前職で実際に使用していたシステムを参考に、自社開発への転職を目指してポートフォリオとして開発しました。
+前職で実際に使用していたシステムを参考に、ポートフォリオとして開発しました。
 
 ## 機能一覧
 - ログイン・ログアウト（Spring Security）
@@ -39,9 +39,9 @@ cd spot-management
 | admin | admin123 |
 
 ## 設計ドキュメント
-- [要件定義書](#)
-- [基本設計書](#)
-- [詳細設計書](#)
+- [要件定義書](https://app.notion.com/p/359f77abdfad803ab6ece652b199d6a9?source=copy_link)
+- [基本設計書](https://app.notion.com/p/359f77abdfad8025b50bf15cd689f516?source=copy_link)
+- [詳細設計書](https://app.notion.com/p/359f77abdfad8074a2b0dd6b97a603cf?source=copy_link)
 
 ## こだわりポイント
 - 前職（航空管制・運航情報官）での実務知識を活かした業務ロジックの実装
