@@ -17,12 +17,12 @@
         .schedule { display: grid; }
 
         .header-row { display: flex; }
-        .spot-header { width: 60px; min-width: 60px; background: #ecf0f1; border: 1px solid #ccc; text-align: center; font-size: 12px; font-weight: bold; padding: 4px; box-sizing: border-box; flex-shrink: 0; }
+        .spot-header { width: 125px; min-width: 125px; background: #ecf0f1; border: 1px solid #ccc; text-align: center; font-size: 12px; font-weight: bold; padding: 4px; box-sizing: border-box; flex-shrink: 0; }
         .hours-header { display: flex; }
         .hour-label { width: 80px; min-width: 80px; background: #ecf0f1; border: 1px solid #ccc; border-left: 2px solid #7f8c8d; text-align: left; font-size: 11px; font-weight: bold; padding: 4px 2px; box-sizing: border-box; flex-shrink: 0; }
 
         .spot-row { display: flex; position: relative; height: 40px; border-bottom: 1px solid #ccc; }
-        .spot-label { width: 60px; min-width: 60px; background: #bdc3c7; border: 1px solid #ccc; text-align: center; font-size: 12px; font-weight: bold; display: flex; align-items: center; justify-content: center; flex-shrink: 0; box-sizing: border-box; }
+        .spot-label { width: 125px; min-width: 125px; background: #bdc3c7; border: 1px solid #ccc; text-align: center; font-size: 12px; font-weight: bold; display: flex; align-items: center; justify-content: center; flex-shrink: 0; box-sizing: border-box; }
         .cells-area { position: relative; display: flex; flex: 1; }
         .quarter { width: 20px; min-width: 20px; height: 100%; border-right: 1px solid #eee; box-sizing: border-box; flex-shrink: 0; }
         .quarter.h { border-right: 1px solid #eee; border-left: 2px solid #7f8c8d; }
@@ -50,7 +50,10 @@
         <div class="schedule-wrapper">
             <!-- ヘッダー行 -->
             <div class="header-row">
-                <div class="spot-header">スポット</div>
+				<div class="spot-header" style="display:flex; padding:0;">
+					<div style="width:60px; min-width:60px; text-align:center; padding:4px; border-right:1px solid #ccc; box-sizing:border-box;">スポット</div>
+					<div style="width:65px; min-width:65px; text-align:center; padding:4px; box-sizing:border-box;">サイズ</div>
+				</div>
                 <div class="hours-header">
                     <div class="hour-label">00:00</div>
                     <div class="hour-label">01:00</div>
@@ -81,7 +84,10 @@
 
             <!-- スポット行 -->
             <div th:each="spot : ${spots}" class="spot-row" th:attr="data-spot-id=${spot.id}">
-                <div class="spot-label" th:text="${spot.spotNumber}"></div>
+				<div class="spot-label" style="display:flex; padding:0;">
+					<div style="width:60px; min-width:60px; text-align:center; padding:4px; border-right:1px solid #ccc; box-sizing:border-box;" th:text="${spot.spotNumber}"></div>
+					<div style="width:65px; min-width:65px; text-align:center; padding:4px; box-sizing:border-box;" th:text="${spot.maxWingspan}"></div>
+				</div>
                 <div class="cells-area">
                     <div class="quarter h"></div><div class="quarter"></div><div class="quarter"></div><div class="quarter"></div>
                     <div class="quarter h"></div><div class="quarter"></div><div class="quarter"></div><div class="quarter"></div>
