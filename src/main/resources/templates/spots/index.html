@@ -22,10 +22,10 @@
         .hour-label { width: 80px; min-width: 80px; background: #ecf0f1; border: 1px solid #ccc; border-left: 2px solid #7f8c8d; text-align: left; font-size: 11px; font-weight: bold; padding: 4px 2px; box-sizing: border-box; flex-shrink: 0; }
 
         .spot-row { display: flex; position: relative; height: 40px; border-bottom: 1px solid #ccc; }
-        .spot-label { width: 125px; min-width: 125px; background: #bdc3c7; border: 1px solid #ccc; text-align: center; font-size: 12px; font-weight: bold; display: flex; align-items: center; justify-content: center; flex-shrink: 0; box-sizing: border-box; }
-        .cells-area { position: relative; display: flex; flex: 1; }
+        .spot-label { width: 125px; min-width: 125px; background: #bdc3c7; border: 1px solid #ccc; text-align: center; font-size: 12px; font-weight: bold; display: flex; align-items: center; justify-content: center; flex-shrink: 0; box-sizing: border-box; height: 100%; }
+        .cells-area { position: relative; display: flex; flex: 1; border-bottom: 1px solid #ccc; }
         .quarter { width: 20px; min-width: 20px; height: 100%; border-right: 1px solid #eee; box-sizing: border-box; flex-shrink: 0; }
-        .quarter.h { border-right: 1px solid #eee; border-left: 2px solid #7f8c8d; }
+        .quarter.h { height: 100%; border-right: 1px solid #eee; border-left: 2px solid #7f8c8d; box-sizing: border-box; flex-shrink: 0; }
 
         .flight-bar { position: absolute; height: 28px; top: 6px; border-radius: 4px; font-size: 11px; display: flex; align-items: center; justify-content: center; white-space: nowrap; overflow: hidden; cursor: pointer; z-index: 2; padding: 0 4px; box-sizing: border-box; }
         .flight-normal { background-color: #85c1e9; color: #1a5276; }
@@ -88,32 +88,36 @@
 					<div style="width:60px; min-width:60px; text-align:center; padding:4px; border-right:1px solid #ccc; box-sizing:border-box;" th:text="${spot.spotNumber}"></div>
 					<div style="width:65px; min-width:65px; text-align:center; padding:4px; box-sizing:border-box;" th:text="${spot.maxWingspan}"></div>
 				</div>
-                <div class="cells-area">
-                    <div class="quarter h"></div><div class="quarter"></div><div class="quarter"></div><div class="quarter"></div>
-                    <div class="quarter h"></div><div class="quarter"></div><div class="quarter"></div><div class="quarter"></div>
-                    <div class="quarter h"></div><div class="quarter"></div><div class="quarter"></div><div class="quarter"></div>
-                    <div class="quarter h"></div><div class="quarter"></div><div class="quarter"></div><div class="quarter"></div>
-                    <div class="quarter h"></div><div class="quarter"></div><div class="quarter"></div><div class="quarter"></div>
-                    <div class="quarter h"></div><div class="quarter"></div><div class="quarter"></div><div class="quarter"></div>
-                    <div class="quarter h"></div><div class="quarter"></div><div class="quarter"></div><div class="quarter"></div>
-                    <div class="quarter h"></div><div class="quarter"></div><div class="quarter"></div><div class="quarter"></div>
-                    <div class="quarter h"></div><div class="quarter"></div><div class="quarter"></div><div class="quarter"></div>
-                    <div class="quarter h"></div><div class="quarter"></div><div class="quarter"></div><div class="quarter"></div>
-                    <div class="quarter h"></div><div class="quarter"></div><div class="quarter"></div><div class="quarter"></div>
-                    <div class="quarter h"></div><div class="quarter"></div><div class="quarter"></div><div class="quarter"></div>
-                    <div class="quarter h"></div><div class="quarter"></div><div class="quarter"></div><div class="quarter"></div>
-                    <div class="quarter h"></div><div class="quarter"></div><div class="quarter"></div><div class="quarter"></div>
-                    <div class="quarter h"></div><div class="quarter"></div><div class="quarter"></div><div class="quarter"></div>
-                    <div class="quarter h"></div><div class="quarter"></div><div class="quarter"></div><div class="quarter"></div>
-                    <div class="quarter h"></div><div class="quarter"></div><div class="quarter"></div><div class="quarter"></div>
-                    <div class="quarter h"></div><div class="quarter"></div><div class="quarter"></div><div class="quarter"></div>
-                    <div class="quarter h"></div><div class="quarter"></div><div class="quarter"></div><div class="quarter"></div>
-                    <div class="quarter h"></div><div class="quarter"></div><div class="quarter"></div><div class="quarter"></div>
-                    <div class="quarter h"></div><div class="quarter"></div><div class="quarter"></div><div class="quarter"></div>
-                    <div class="quarter h"></div><div class="quarter"></div><div class="quarter"></div><div class="quarter"></div>
-                    <div class="quarter h"></div><div class="quarter"></div><div class="quarter"></div><div class="quarter"></div>
-                    <div class="quarter h"></div><div class="quarter"></div><div class="quarter"></div><div class="quarter"></div>
-                </div>
+				<div class="cells-area">
+				    <!-- 00:00-06:00 -->
+				    <div class="quarter h"></div><div class="quarter"></div><div class="quarter"></div><div class="quarter"></div>
+				    <div class="quarter h"></div><div class="quarter"></div><div class="quarter"></div><div class="quarter"></div>
+				    <div class="quarter h"></div><div class="quarter"></div><div class="quarter"></div><div class="quarter"></div>
+				    <div class="quarter h"></div><div class="quarter"></div><div class="quarter"></div><div class="quarter"></div>
+				    <div class="quarter h"></div><div class="quarter"></div><div class="quarter"></div><div class="quarter"></div>
+				    <div class="quarter h"></div><div class="quarter"></div><div class="quarter"></div><div class="quarter"></div>
+				    <!-- 06:00-12:00 -->
+				    <div class="quarter h"></div><div class="quarter"></div><div class="quarter"></div><div class="quarter"></div>
+				    <div class="quarter h"></div><div class="quarter"></div><div class="quarter"></div><div class="quarter"></div>
+				    <div class="quarter h"></div><div class="quarter"></div><div class="quarter"></div><div class="quarter"></div>
+				    <div class="quarter h"></div><div class="quarter"></div><div class="quarter"></div><div class="quarter"></div>
+				    <div class="quarter h"></div><div class="quarter"></div><div class="quarter"></div><div class="quarter"></div>
+				    <div class="quarter h"></div><div class="quarter"></div><div class="quarter"></div><div class="quarter"></div>
+				    <!-- 12:00-18:00 -->
+				    <div class="quarter h"></div><div class="quarter"></div><div class="quarter"></div><div class="quarter"></div>
+				    <div class="quarter h"></div><div class="quarter"></div><div class="quarter"></div><div class="quarter"></div>
+				    <div class="quarter h"></div><div class="quarter"></div><div class="quarter"></div><div class="quarter"></div>
+				    <div class="quarter h"></div><div class="quarter"></div><div class="quarter"></div><div class="quarter"></div>
+				    <div class="quarter h"></div><div class="quarter"></div><div class="quarter"></div><div class="quarter"></div>
+				    <div class="quarter h"></div><div class="quarter"></div><div class="quarter"></div><div class="quarter"></div>
+				    <!-- 18:00-24:00 -->
+				    <div class="quarter h"></div><div class="quarter"></div><div class="quarter"></div><div class="quarter"></div>
+				    <div class="quarter h"></div><div class="quarter"></div><div class="quarter"></div><div class="quarter"></div>
+				    <div class="quarter h"></div><div class="quarter"></div><div class="quarter"></div><div class="quarter"></div>
+				    <div class="quarter h"></div><div class="quarter"></div><div class="quarter"></div><div class="quarter"></div>
+				    <div class="quarter h"></div><div class="quarter"></div><div class="quarter"></div><div class="quarter"></div>
+				    <div class="quarter h"></div><div class="quarter"></div><div class="quarter"></div><div class="quarter"></div>
+				</div>
             </div>
         </div>
     </main>
