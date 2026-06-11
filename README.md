@@ -69,13 +69,8 @@ Spring Securityを利用した認証機能
 
 ## 起動方法（ローカル）
 
-```bash
-git clone https://github.com/msuzuki1128business-hash/spot-management.git
-cd spot-management
-./gradlew bootRun
-```
 
-ブラウザで `http://localhost:8080` にアクセス
+ブラウザで http://13.159.210.191:8080 にアクセス
 
 ### テストアカウント
 
