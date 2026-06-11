@@ -1,5 +1,6 @@
 package com.example.spotmanagement.controller;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.spotmanagement.entity.AircraftType;
@@ -33,11 +35,22 @@ public class SpotController {
     private final FlightService flightService;
 
     @GetMapping("/spots")
-    public String showSpots(Model model) {
+    public String showSpots(@RequestParam(required = false) String date, Model model) {
         List<Spot> spots = spotRepository.findAll();
-        List<Flight> flights = flightRepository.findAll();
+        
+        // 日付が指定されていない場合は今日の日付を使用
+        LocalDate targetDate;
+        if (date == null || date.isEmpty()) {
+        	targetDate = LocalDate.now(java.time.ZoneId.of("UTC"));
+        } else {
+            targetDate = LocalDate.parse(date);
+        }
+        // 指定日付の便だけ取得
+        List<Flight> flights = flightRepository.findByDate(targetDate);
+        
         model.addAttribute("spots", spots);
         model.addAttribute("flights", flights);
+        model.addAttribute("targetDate", targetDate);
         return "spots/index";
     }
 

@@ -1,5 +1,6 @@
 package com.example.spotmanagement;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import org.springframework.boot.CommandLineRunner;
@@ -85,21 +86,24 @@ public class DataInitializer implements CommandLineRunner {
             AircraftType b777 = aircraftTypeRepository.findAll().get(0);
             AircraftType b737 = aircraftTypeRepository.findAll().get(3);
 
+         // 今日の日付を取得
+            LocalDate today = LocalDate.now();
+
             Flight flight1 = new Flight();
             flight1.setArrSpot(spot144);
             flight1.setArrAircraftType(b777);
             flight1.setArrFlightNumber("NH96");
             flight1.setArrFromAirport("VHHH");
-            flight1.setArrScheduledDepartureTime(LocalDateTime.of(2026, 5, 18, 1, 0));
+            flight1.setArrScheduledDepartureTime(today.atTime(1, 0));
             flight1.setArrToAirport("RJTT");
-            flight1.setArrScheduledArrivalTime(LocalDateTime.of(2026, 5, 18, 3, 0));
+            flight1.setArrScheduledArrivalTime(today.atTime(3, 0));
             flight1.setDepSpot(spot144);
             flight1.setDepAircraftType(b777);
             flight1.setDepFlightNumber("NH216");
             flight1.setDepFromAirport("RJTT");
-            flight1.setDepScheduledDepartureTime(LocalDateTime.of(2026, 5, 18, 8, 0));
+            flight1.setDepScheduledDepartureTime(today.atTime(8, 0));
             flight1.setDepToAirport("ROAH");
-            flight1.setDepScheduledArrivalTime(LocalDateTime.of(2026, 5, 18, 10, 30));
+            flight1.setDepScheduledArrivalTime(today.atTime(10, 30));
             flight1.setSizeWarning(false);
             flight1.setIntervalWarning(false);
             flight1.setCreatedAt(LocalDateTime.now());
@@ -110,16 +114,16 @@ public class DataInitializer implements CommandLineRunner {
             flight2.setArrAircraftType(b737);
             flight2.setArrFlightNumber("NH101");
             flight2.setArrFromAirport("RJSS");
-            flight2.setArrScheduledDepartureTime(LocalDateTime.of(2026, 5, 18, 4, 0));
+            flight2.setArrScheduledDepartureTime(today.atTime(4, 0));
             flight2.setArrToAirport("RJTT");
-            flight2.setArrScheduledArrivalTime(LocalDateTime.of(2026, 5, 18, 5, 30));
+            flight2.setArrScheduledArrivalTime(today.atTime(5, 30));
             flight2.setDepSpot(spot145);
             flight2.setDepAircraftType(b737);
             flight2.setDepFlightNumber("NH202");
             flight2.setDepFromAirport("RJTT");
-            flight2.setDepScheduledDepartureTime(LocalDateTime.of(2026, 5, 18, 7, 0));
+            flight2.setDepScheduledDepartureTime(today.atTime(7, 0));
             flight2.setDepToAirport("RJCC");
-            flight2.setDepScheduledArrivalTime(LocalDateTime.of(2026, 5, 18, 9, 0));
+            flight2.setDepScheduledArrivalTime(today.atTime(9, 0));
             flight2.setSizeWarning(false);
             flight2.setIntervalWarning(false);
             flight2.setCreatedAt(LocalDateTime.now());

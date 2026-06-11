@@ -1,14 +1,16 @@
 package com.example.spotmanagement.service;
 
+import java.time.LocalDateTime;
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+
 import com.example.spotmanagement.entity.AircraftType;
 import com.example.spotmanagement.entity.Flight;
 import com.example.spotmanagement.entity.Spot;
 import com.example.spotmanagement.repository.FlightRepository;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
-import java.util.List;
+import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
@@ -42,14 +44,20 @@ public class FlightService {
         List<Flight> existingFlights = flightRepository.findByArrSpotId(spotId);
         for (Flight existing : existingFlights) {
             if (excludeFlightId != null && existing.getId().equals(excludeFlightId)) continue;
-            // 前の便の出発から30分以内に到着する場合
-            if (arrivalTime.isAfter(existing.getDepScheduledDepartureTime()) &&
-                arrivalTime.isBefore(existing.getDepScheduledDepartureTime().plusMinutes(30))) {
+
+            long minutesAfterPrev = java.time.Duration.between(
+                existing.getDepScheduledDepartureTime(), arrivalTime).toMinutes();
+            System.out.println("minutesAfterPrev: " + minutesAfterPrev);
+
+            if (minutesAfterPrev >= 0 && minutesAfterPrev < 30) {
                 return true;
             }
-            // 次の便が出発から30分以内に到着する場合
-            if (existing.getArrScheduledArrivalTime().isAfter(departureTime) &&
-                existing.getArrScheduledArrivalTime().isBefore(departureTime.plusMinutes(30))) {
+
+            long minutesBeforeNext = java.time.Duration.between(
+                departureTime, existing.getArrScheduledArrivalTime()).toMinutes();
+            System.out.println("minutesBeforeNext: " + minutesBeforeNext);
+
+            if (minutesBeforeNext >= 0 && minutesBeforeNext < 30) {
                 return true;
             }
         }
