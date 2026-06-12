@@ -43,7 +43,7 @@
 
     <main>
 		<div class="toolbar">
-		    <button onclick="location.href='/spots/flights/new'">+ 新規作成</button>
+		   <button th:data-date="${targetDate}" onclick="location.href='/spots/flights/new?date=' + this.dataset.date">+ 新規作成</button>
 		    <button onclick="location.href='/spots?date=' + getPrevDate()" id="prevBtn">◀ 前日</button>
 		    <span th:text="${targetDate}" style="font-weight:bold; font-size:14px;"></span>
 		    <button onclick="location.href='/spots?date=' + getNextDate()" id="nextBtn">翌日 ▶</button>

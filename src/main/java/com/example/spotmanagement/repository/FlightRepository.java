@@ -21,7 +21,7 @@ public interface FlightRepository extends JpaRepository<Flight, Long> {
     // 到着スポットIDで検索
     List<Flight> findByArrSpotId(Long spotId);
 
-    // 日付で検索
+    // DateTimeからDate部分だけを取り出す
     @Query("SELECT f FROM Flight f WHERE CAST(f.arrScheduledArrivalTime AS localdate) = :date")
     List<Flight> findByDate(@Param("date") LocalDate date);
 }

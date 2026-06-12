@@ -30,7 +30,9 @@ public class FlightService {
     public boolean isOverlap(Long spotId, LocalDateTime arrivalTime, LocalDateTime departureTime, Long excludeFlightId) {
         List<Flight> existingFlights = flightRepository.findByArrSpotId(spotId);
         for (Flight existing : existingFlights) {
+        	//更新時に自分自身を重複判定しないため除外
             if (excludeFlightId != null && existing.getId().equals(excludeFlightId)) continue;
+            //重複チェック 当該便の到着予定時刻が既存の便の出発予定時刻より前かつ当該便の出発予定時刻が既存便の到着予定時刻より後の場合エラー
             if (arrivalTime.isBefore(existing.getDepScheduledDepartureTime()) &&
                 departureTime.isAfter(existing.getArrScheduledArrivalTime())) {
                 return true;
@@ -42,20 +44,22 @@ public class FlightService {
     // ③ 30分インターバルチェック（警告：便バーを黄色表示）
     public boolean isIntervalShort(Long spotId, LocalDateTime arrivalTime, LocalDateTime departureTime, Long excludeFlightId) {
         List<Flight> existingFlights = flightRepository.findByArrSpotId(spotId);
+        //既存便と当該便の便間隔を総当たりで確認
         for (Flight existing : existingFlights) {
-            if (excludeFlightId != null && existing.getId().equals(excludeFlightId)) continue;
+        	//更新時に自分自身を重複判定しないため除外
+        	if (excludeFlightId != null && existing.getId().equals(excludeFlightId)) continue;
 
-            long minutesAfterPrev = java.time.Duration.between(
+        	// 当該便の出発予定時刻から既存便の到着予定時刻までの差を確認
+        	long minutesAfterPrev = java.time.Duration.between(
                 existing.getDepScheduledDepartureTime(), arrivalTime).toMinutes();
-            System.out.println("minutesAfterPrev: " + minutesAfterPrev);
 
             if (minutesAfterPrev >= 0 && minutesAfterPrev < 30) {
                 return true;
             }
 
+         // 当該便の到着予定時刻から既存便の出発予定時刻までの差を確認
             long minutesBeforeNext = java.time.Duration.between(
                 departureTime, existing.getArrScheduledArrivalTime()).toMinutes();
-            System.out.println("minutesBeforeNext: " + minutesBeforeNext);
 
             if (minutesBeforeNext >= 0 && minutesBeforeNext < 30) {
                 return true;

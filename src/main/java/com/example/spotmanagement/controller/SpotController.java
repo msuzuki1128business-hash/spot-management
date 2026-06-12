@@ -35,7 +35,9 @@ public class SpotController {
     private final FlightService flightService;
 
     @GetMapping("/spots")
+    //スポットの一覧画面を表示
     public String showSpots(@RequestParam(required = false) String date, Model model) {
+    	//スポットリポジトリから全件取得
         List<Spot> spots = spotRepository.findAll();
         
         // 日付が指定されていない場合は今日の日付を使用
@@ -47,23 +49,36 @@ public class SpotController {
         }
         // 指定日付の便だけ取得
         List<Flight> flights = flightRepository.findByDate(targetDate);
-        
+        // スポット一覧（画面の表示・選択肢用）
         model.addAttribute("spots", spots);
+        // 指定日のフライト一覧（スポット使用状況表示用）
         model.addAttribute("flights", flights);
+        // 画面表示対象の日付（未指定なら今日）
         model.addAttribute("targetDate", targetDate);
         return "spots/index";
     }
 
+    //便の新規登録画面を表示
     @GetMapping("/spots/flights/new")
-    public String showFlightForm(Model model) {
+    public String showFlightForm(@RequestParam String date, Model model) {
+        model.addAttribute("targetDate", date);
         List<Spot> spots = spotRepository.findAll();
         List<AircraftType> aircraftTypes = aircraftTypeRepository.findAll();
+        // スポット一覧を画面へ渡す（プルダウン用）
         model.addAttribute("spots", spots);
+        // 型式一覧を画面へ渡す（プルダウン用）
         model.addAttribute("aircraftTypes", aircraftTypes);
-        model.addAttribute("flightForm", new FlightForm());
+        FlightForm form = new FlightForm();
+        // 開いている日付を初期値としてセット
+        form.setArrScheduledDepartureTime(date + "T00:00");
+        form.setArrScheduledArrivalTime(date + "T00:00");
+        form.setDepScheduledDepartureTime(date + "T00:00");
+        form.setDepScheduledArrivalTime(date + "T00:00");
+        model.addAttribute("flightForm", form);
         return "spots/flight_form";
     }
 
+    //便の新規登録を実施 form→flight
     @PostMapping("/spots/flights")
     public String createFlight(@ModelAttribute FlightForm form,
                                RedirectAttributes redirectAttributes,
@@ -85,9 +100,13 @@ public class SpotController {
 
             List<Spot> spots = spotRepository.findAll();
             List<AircraftType> aircraftTypes = aircraftTypeRepository.findAll();
+            // スポット一覧を画面へ渡す（プルダウン用）
             model.addAttribute("spots", spots);
+            // 型式一覧を画面へ渡す（プルダウン用）
             model.addAttribute("aircraftTypes", aircraftTypes);
+            // ユーザーが入力した便情報を画面へ渡す
             model.addAttribute("flightForm", form);
+            // エラーメッセージを便情報を画面へ渡す
             model.addAttribute("errorMessage", "必須項目をすべて入力してください");
             return "spots/flight_form";
         }
@@ -97,24 +116,7 @@ public class SpotController {
         AircraftType arrAircraftType = aircraftTypeRepository.findById(form.getArrAircraftTypeId()).orElseThrow();
         AircraftType depAircraftType = aircraftTypeRepository.findById(form.getDepAircraftTypeId()).orElseThrow();
 
-        
-        // フォーマットチェック
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMddHHmm");
-        try {
-            LocalDateTime.parse(form.getArrScheduledArrivalTime(), formatter);
-            LocalDateTime.parse(form.getArrScheduledDepartureTime(), formatter);
-            LocalDateTime.parse(form.getDepScheduledArrivalTime(), formatter);
-            LocalDateTime.parse(form.getDepScheduledDepartureTime(), formatter);
-        } catch (Exception e) {
-            List<Spot> spots = spotRepository.findAll();
-            List<AircraftType> aircraftTypes = aircraftTypeRepository.findAll();
-            model.addAttribute("spots", spots);
-            model.addAttribute("aircraftTypes", aircraftTypes);
-            model.addAttribute("flightForm", form);
-            model.addAttribute("errorMessage", "時刻の形式が正しくありません（YYYYMMDDHHmmで入力してください）");
-            return "spots/flight_form";
-        }
-
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
         LocalDateTime arrScheduledDeparture = LocalDateTime.parse(form.getArrScheduledDepartureTime(), formatter);
         LocalDateTime arrScheduledArrival = LocalDateTime.parse(form.getArrScheduledArrivalTime(), formatter);
         LocalDateTime depScheduledDeparture = LocalDateTime.parse(form.getDepScheduledDepartureTime(), formatter);
@@ -124,9 +126,13 @@ public class SpotController {
         if (!arrScheduledArrival.isAfter(arrScheduledDeparture)) {
             List<Spot> spots = spotRepository.findAll();
             List<AircraftType> aircraftTypes = aircraftTypeRepository.findAll();
+            // スポット一覧を画面へ渡す（プルダウン用）
             model.addAttribute("spots", spots);
+            // 型式一覧を画面へ渡す（プルダウン用）
             model.addAttribute("aircraftTypes", aircraftTypes);
+            // ユーザーが入力した便情報を画面へ渡す
             model.addAttribute("flightForm", form);
+            // エラーメッセージを便情報を画面へ渡す
             model.addAttribute("errorMessage", "到着便の到着予定時刻は出発予定時刻より後に設定してください");
             return "spots/flight_form";
         }
@@ -135,9 +141,13 @@ public class SpotController {
         if (!depScheduledArrival.isAfter(depScheduledDeparture)) {
             List<Spot> spots = spotRepository.findAll();
             List<AircraftType> aircraftTypes = aircraftTypeRepository.findAll();
+            // スポット一覧を画面へ渡す（プルダウン用）
             model.addAttribute("spots", spots);
+            // 型式一覧を画面へ渡す（プルダウン用）
             model.addAttribute("aircraftTypes", aircraftTypes);
+            // ユーザーが入力した便情報を画面へ渡す
             model.addAttribute("flightForm", form);
+            // エラーメッセージを便情報を画面へ渡す
             model.addAttribute("errorMessage", "出発便の到着予定時刻は出発予定時刻より後に設定してください");
             return "spots/flight_form";
         }
@@ -146,9 +156,13 @@ public class SpotController {
         if (!depScheduledDeparture.isAfter(arrScheduledArrival)) {
             List<Spot> spots = spotRepository.findAll();
             List<AircraftType> aircraftTypes = aircraftTypeRepository.findAll();
+            // スポット一覧を画面へ渡す（プルダウン用）
             model.addAttribute("spots", spots);
+            // 型式一覧を画面へ渡す（プルダウン用）
             model.addAttribute("aircraftTypes", aircraftTypes);
+            // ユーザーが入力した便情報を画面へ渡す
             model.addAttribute("flightForm", form);
+            // エラーメッセージを便情報を画面へ渡す
             model.addAttribute("errorMessage", "出発便の出発予定時刻は到着便の到着予定時刻より後に設定してください");
             return "spots/flight_form";
         }
@@ -157,9 +171,13 @@ public class SpotController {
         if (flightService.isOverlap(arrSpot.getId(), arrScheduledArrival, depScheduledDeparture, null)) {
             List<Spot> spots = spotRepository.findAll();
             List<AircraftType> aircraftTypes = aircraftTypeRepository.findAll();
+            // スポット一覧を画面へ渡す（プルダウン用）
             model.addAttribute("spots", spots);
+            // 型式一覧を画面へ渡す（プルダウン用）
             model.addAttribute("aircraftTypes", aircraftTypes);
+            // ユーザーが入力した便情報を画面へ渡す
             model.addAttribute("flightForm", form);
+            // エラーメッセージを便情報を画面へ渡す
             model.addAttribute("errorMessage", "指定した時間帯はすでに使用されています");
             return "spots/flight_form";
         }
@@ -180,6 +198,7 @@ public class SpotController {
         flight.setDepToAirport(form.getDepToAirport());
         flight.setDepScheduledArrivalTime(LocalDateTime.parse(form.getDepScheduledArrivalTime(), formatter));
 
+        //　実績情報は必須でなないのでnull,空文字を考慮
         if (form.getArrActualDepartureTime() != null && !form.getArrActualDepartureTime().isEmpty()) {
             flight.setArrActualDepartureTime(LocalDateTime.parse(form.getArrActualDepartureTime(), formatter));
         }
@@ -209,13 +228,14 @@ public class SpotController {
         return "redirect:/spots";
     }
     
+    //便編集画面を表示　flight→form
     @GetMapping("/spots/flights/{id}/edit")
     public String showEditForm(@PathVariable("id") Long id, Model model) {
         Flight flight = flightRepository.findById(id).orElseThrow();
         List<Spot> spots = spotRepository.findAll();
         List<AircraftType> aircraftTypes = aircraftTypeRepository.findAll();
 
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMddHHmm");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
 
         FlightForm form = new FlightForm();
         form.setArrSpotId(flight.getArrSpot().getId());
@@ -246,18 +266,23 @@ public class SpotController {
             form.setDepActualArrivalTime(flight.getDepActualArrivalTime().format(formatter));
         }
 
+        // スポット一覧を画面へ渡す（プルダウン用）
         model.addAttribute("spots", spots);
+        // 型式一覧を画面へ渡す（プルダウン用）
         model.addAttribute("aircraftTypes", aircraftTypes);
+        // ユーザーが入力した便情報を画面へ渡す
         model.addAttribute("flightForm", form);
+        // 編集対象便のIDを画面へ渡す
         model.addAttribute("flightId", id);
         return "spots/flight_edit";
     }
 
+   //便更新を実施
     @PostMapping("/spots/flights/{id}")
     public String updateFlight(@PathVariable("id") Long id,
                                @ModelAttribute FlightForm form,
                                Model model) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMddHHmm");
+    	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
 
         Spot arrSpot = spotRepository.findById(form.getArrSpotId()).orElseThrow();
         Spot depSpot = spotRepository.findById(form.getDepSpotId()).orElseThrow();
@@ -271,10 +296,15 @@ public class SpotController {
         if (flightService.isOverlap(arrSpot.getId(), arrivalTime, departureTime, id)) {
             List<Spot> spots = spotRepository.findAll();
             List<AircraftType> aircraftTypes = aircraftTypeRepository.findAll();
+            // スポット一覧を画面へ渡す（プルダウン用）
             model.addAttribute("spots", spots);
+            // 型式一覧を画面へ渡す（プルダウン用）
             model.addAttribute("aircraftTypes", aircraftTypes);
+            // ユーザーが入力した便情報を画面へ渡す
             model.addAttribute("flightForm", form);
+            // 編集対象便のIDを画面へ渡す
             model.addAttribute("flightId", id);
+            // エラーメッセージを便情報を画面へ渡す
             model.addAttribute("errorMessage", "指定した時間帯はすでに使用されています");
             return "spots/flight_edit";
         }
@@ -317,6 +347,7 @@ public class SpotController {
         return "redirect:/spots";
     }
 
+    //便削除を実施
     @PostMapping("/spots/flights/{id}/delete")
     public String deleteFlight(@PathVariable("id") Long id) {
         flightRepository.deleteById(id);
