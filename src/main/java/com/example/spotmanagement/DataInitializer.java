@@ -89,6 +89,7 @@ public class DataInitializer implements CommandLineRunner {
          // 今日の日付を取得
             LocalDate today = LocalDate.now();
 
+            // テストデータはバリデーションチェックなし
             Flight flight1 = new Flight();
             flight1.setArrSpot(spot144);
             flight1.setArrAircraftType(b777);
