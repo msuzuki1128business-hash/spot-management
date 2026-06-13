@@ -1,0 +1,288 @@
+@charset "UTF-8";
+
+/* =========================
+   全体レイアウト
+   ========================= */
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+main {
+    padding: 20px;
+    overflow-x: auto;
+}
+
+
+/* =========================
+   ヘッダー
+   ========================= */
+
+header {
+    background-color: #2c3e50;
+    color: white;
+    padding: 10px 20px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 18px;
+}
+
+header button {
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+
+    padding: 8px 16px;
+
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+
+/* =========================
+   日付操作ツールバー
+   ========================= */
+
+.toolbar {
+    margin-bottom: 10px;
+
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.toolbar button {
+    background-color: #2980b9;
+    color: white;
+    border: none;
+
+    padding: 8px 16px;
+
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.utc-label {
+    font-size: 12px;
+    color: #e74c3c;
+    font-weight: bold;
+}
+
+
+/* =========================
+   スケジュール全体
+   ========================= */
+
+.schedule-wrapper {
+    overflow-x: auto;
+}
+
+.schedule {
+    display: grid;
+}
+
+
+/* =========================
+   時間ヘッダー
+   ========================= */
+
+.header-row {
+    display: flex;
+}
+
+.spot-header {
+    width: 125px;
+    min-width: 125px;
+
+    background: #ecf0f1;
+    border: 1px solid #ccc;
+
+    text-align: center;
+    font-size: 12px;
+    font-weight: bold;
+
+    padding: 4px;
+
+    box-sizing: border-box;
+    flex-shrink: 0;
+}
+
+.hours-header {
+    display: flex;
+}
+
+/* 1時間ごとの見出し */
+.hour-label {
+    width: 80px;
+    min-width: 80px;
+
+    background: #ecf0f1;
+
+    border: 1px solid #ccc;
+    border-left: 2px solid #7f8c8d;
+
+    text-align: left;
+    font-size: 11px;
+    font-weight: bold;
+
+    padding: 4px 2px;
+
+    box-sizing: border-box;
+    flex-shrink: 0;
+}
+
+
+/* =========================
+   スポット行
+   ========================= */
+
+.spot-row {
+    display: flex;
+    position: relative;
+
+    height: 40px;
+
+    border-bottom: 1px solid #ccc;
+}
+
+/* スポット番号とサイズ表示領域 */
+.spot-label {
+    width: 125px;
+    min-width: 125px;
+
+    background: #bdc3c7;
+    border: 1px solid #ccc;
+
+    text-align: center;
+    font-size: 12px;
+    font-weight: bold;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+    box-sizing: border-box;
+
+    height: 100%;
+}
+
+/* スポット番号 */
+.spot-number {
+    width: 60px;
+    min-width: 60px;
+
+    text-align: center;
+    padding: 4px;
+
+    border-right: 1px solid #ccc;
+
+    box-sizing: border-box;
+}
+
+/* 機体サイズ */
+.spot-size {
+    width: 65px;
+    min-width: 65px;
+
+    text-align: center;
+    padding: 4px;
+
+    box-sizing: border-box;
+}
+
+
+/* =========================
+   時間グリッド
+   ========================= */
+
+.cells-area {
+    position: relative;
+
+    display: flex;
+    flex: 1;
+
+    border-bottom: 1px solid #ccc;
+}
+
+/* 15分単位のマス */
+.quarter {
+    width: 20px;
+    min-width: 20px;
+
+    height: 100%;
+
+    border-right: 1px solid #eee;
+
+    box-sizing: border-box;
+    flex-shrink: 0;
+}
+
+/* 各時間の開始位置(00:00,01:00...) */
+.quarter.h {
+    height: 100%;
+
+    border-right: 1px solid #eee;
+    border-left: 2px solid #7f8c8d;
+
+    box-sizing: border-box;
+    flex-shrink: 0;
+}
+
+
+/* =========================
+   便バー
+   ========================= */
+
+/* 航空機の駐機時間を表すバー */
+.flight-bar {
+    position: absolute;
+
+    height: 28px;
+    top: 6px;
+
+    border-radius: 4px;
+
+    font-size: 11px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    white-space: nowrap;
+    overflow: hidden;
+
+    cursor: pointer;
+
+    z-index: 2;
+
+    padding: 0 4px;
+
+    box-sizing: border-box;
+}
+
+/* 通常 */
+.flight-normal {
+    background-color: #85c1e9;
+    color: #1a5276;
+}
+
+/* スポットサイズ警告 */
+.flight-warning-size {
+    background-color: #e74c3c;
+    color: white;
+}
+
+/* 前後便間隔警告 */
+.flight-warning-interval {
+    background-color: #f39c12;
+    color: white;
+}
