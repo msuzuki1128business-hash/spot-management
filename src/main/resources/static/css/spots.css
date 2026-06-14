@@ -115,6 +115,23 @@ header button {
     flex-shrink: 0;
 }
 
+.spot-col {
+    text-align: center;
+    padding: 4px;
+    box-sizing: border-box;
+    border-right: 1px solid #ccc;
+}
+
+.spot-col-number {
+    width: 60px;
+    min-width: 60px;
+}
+
+.spot-col-size {
+    width: 65px;
+    min-width: 65px;
+}
+
 .hours-header {
     display: flex;
 }

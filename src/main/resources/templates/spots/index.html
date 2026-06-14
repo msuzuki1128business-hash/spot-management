@@ -28,8 +28,8 @@
             <!-- ヘッダー行 -->
             <div class="header-row">
 				<div class="spot-header" style="display:flex; padding:0;">
-					<div style="width:60px; min-width:60px; text-align:center; padding:4px; border-right:1px solid #ccc; box-sizing:border-box;">スポット</div>
-					<div style="width:65px; min-width:65px; text-align:center; padding:4px; box-sizing:border-box;">サイズ</div>
+					<div class="spot-col spot-col-number">スポット</div>
+					<div class="spot-col spot-col-size">サイズ</div>
 				</div>
                 <div class="hours-header">
                     <div class="hour-label">00:00</div>
@@ -62,8 +62,12 @@
             <!-- スポット行 -->
             <div th:each="spot : ${spots}" class="spot-row" th:data-spot-id="${spot.id}">
 				<div class="spot-label" style="display:flex; padding:0;">
-					<div style="width:60px; min-width:60px; text-align:center; padding:4px; border-right:1px solid #ccc; box-sizing:border-box;" th:text="${spot.spotNumber}"></div>
-					<div style="width:65px; min-width:65px; text-align:center; padding:4px; box-sizing:border-box;" th:text="${spot.maxWingspan}"></div>
+					<div class="spot-number"
+					     th:text="${spot.spotNumber}">
+					</div>
+					<div class="spot-size"
+					     th:text="${spot.maxWingspan}">
+					</div>
 				</div>
 				<div class="cells-area">
 				    <th:block th:each="hour : ${#numbers.sequence(0,23)}">
