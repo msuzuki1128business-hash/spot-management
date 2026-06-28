@@ -34,10 +34,10 @@ public class DataInitializer implements CommandLineRunner {
         if (userRepository.count() == 0) {
             User user = new User();
             user.setUsername("admin");
-            user.setPassword(passwordEncoder.encode("admin123"));
+            user.setPassword(passwordEncoder.encode("Admin@2026spot!"));
             user.setCreatedAt(LocalDateTime.now());
             userRepository.save(user);
-            System.out.println("テストユーザーを作成しました: admin / admin123");
+            System.out.println("テストユーザーを作成しました: admin / Admin@2026spot!");
         }
 
         // スポットの初期データ

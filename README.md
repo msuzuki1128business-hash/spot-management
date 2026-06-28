@@ -91,7 +91,7 @@ Spring Securityを利用した認証機能
 
 | ユーザーID | パスワード    |
 | ------ | -------- |
-| admin  | admin123 |
+| admin  | Admin@2026spot! |
 
 ## 設計ドキュメント
 
